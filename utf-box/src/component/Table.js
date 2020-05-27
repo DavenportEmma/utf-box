@@ -12,21 +12,15 @@ class Cell extends React.Component {
   }
 
   mouseOverHandler() {
-    this.setState({
-      isHovered: true,
-      colour: 'black'
-    })
+    
   }
 
   mouseOutHandler() {
-    this.setState({
-      isHovered: false,
-      colour: 'black'
-    })
+
   }
 
   clickHandler() {
-    this.setState({value: '┃'})
+    
   }
 
   render() {
@@ -35,7 +29,8 @@ class Cell extends React.Component {
         className='cell'
         onMouseOver={() => this.mouseOverHandler()}
         onMouseOut={() => this.mouseOutHandler()}
-        onClick={() => this.clickHandler()}>
+        onClick={() => this.clickHandler()}
+      >
         {this.state.value}
       </span>
     )
@@ -43,6 +38,12 @@ class Cell extends React.Component {
 }
 
 export default class Table extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      
+    }
+  }
   renderCell(i) {
     return <Cell key={i}/>
   }
@@ -62,13 +63,14 @@ export default class Table extends React.Component {
     }
     return rows;
   }
-
   render() {
     const colNum = 50;
     const rowNum = 25;
 
     return (
-      <div className='table'>
+      <div 
+        className='table'
+      >
         {this.renderTable(rowNum, colNum)}
       </div>
     )
