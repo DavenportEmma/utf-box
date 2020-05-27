@@ -4,7 +4,9 @@ import './Table.css'
 class Cell extends React.Component {
   render() {
     return (
-      <span className='cell' onClick={this.props.onClick}>{this.props.value}</span>
+      <span className='cell' 
+            onClick={this.props.onClick}>{this.props.value}
+      </span>
     )
   }
 }
