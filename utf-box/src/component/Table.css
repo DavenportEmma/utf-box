@@ -1,14 +1,16 @@
+@import "../style.css";
+
 .cell {
   font-family: "Lucida Console", Monaco, monospace;
   width: 1ch;
   min-width: 1ch;
-  height: 1ch;
+  height: 2ch;
   min-height: 1ch;
 
-  border-width: 0px;
-  border-color: rgb(200,200,200);
-  border-style: solid;
-  padding: 0px;
+  color: var(--box-characters);
+
+  background-color: var(--cell-background);
+  border-left: 1px solid var(--main-background);
 
   display: inline-block;
 
