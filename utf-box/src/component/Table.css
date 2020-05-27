@@ -1,0 +1,21 @@
+.cell {
+  font-family: "Lucida Console", Monaco, monospace;
+  width: 1ch;
+  min-width: 1ch;
+  height: 1ch;
+  min-height: 1ch;
+
+  border-width: 0px;
+  border-color: rgb(200,200,200);
+  border-style: solid;
+  padding: 0px;
+
+  display: inline-block;
+
+  vertical-align: middle;
+}
+
+.table {
+  width: 750px;
+  cursor: default;
+}
