@@ -5,7 +5,9 @@ class Cell extends React.Component {
   render() {
     return (
       <span className='cell' 
-            onClick={this.props.onClick}>{this.props.value}
+            onClick={this.props.onClick}
+            onMouseEnter={this.props.onMouseEnter}>
+        {this.props.value}    
       </span>
     )
   }
@@ -13,7 +15,11 @@ class Cell extends React.Component {
 
 export default class Table extends React.Component {
   renderCell(i, j) {
-      return <Cell key={j} value={this.props.cells[i][j]} onClick={() => this.props.onClick(i, j)}/>
+      return <Cell key={j} 
+                   value={this.props.cells[i][j]} 
+                   onClick={() => this.props.onClick(i, j)}
+                   onMouseEnter={() => this.props.onMouseEnter(i, j)}
+              />
   }
 
   renderRow(i) {
@@ -27,7 +33,9 @@ export default class Table extends React.Component {
   renderTable() {
     const rows = [];
     for (let i = 0; i < this.props.rowNum; i++) {
-      rows.push(<div key={i} className='row'>{this.renderRow(i)}</div>)
+      rows.push(<div key={i} 
+                     className='row'>{this.renderRow(i)}
+                </div>)
     }
     return rows;
   }
