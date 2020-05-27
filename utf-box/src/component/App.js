@@ -1,12 +1,13 @@
 import React from 'react';
-import logo from './../logo.svg';
+import Table from "./Table";
 import './App.css';
 
-function App() {
-  return (  
-    <div><p>monospace</p>
-    <p>lllwwwww</p></div>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <div className="component-App">
+        <Table />
+      </div>
+    )
+  }
 }
-
-export default App;
