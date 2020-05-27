@@ -1,1 +1,9 @@
 # utf-box
+[This unicode box drawer](https://conordavenport.github.io/utf-box/) is
+a project I did to learn the React Javascript framework, and I wanted an
+easy way to generate unicode boxes.
+
+Draw your box and when it's ready, click select and select your box to
+copy it into your clipboard.
+
+It's pretty janky and doesn't work on mobile yet.
