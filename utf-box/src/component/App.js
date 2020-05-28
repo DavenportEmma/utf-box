@@ -90,7 +90,8 @@ export default class App extends React.Component {
 
     if(draw === "draw" && j < this.leftmost) {
       this.leftmost = j;
-
+      // fill all the cells right of the leftmost non-empty cell to
+      // improve selecting it for copy pasting
       for (let k = 0; k < this.rows; k++) {
         for (let m = this.leftmost; m < this.cols; m++) {
           if (!this.check(n[k][m])) {
