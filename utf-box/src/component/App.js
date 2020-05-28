@@ -88,6 +88,19 @@ export default class App extends React.Component {
 
     n[i][j] = ans;
 
+    if(draw === "erase") {
+      loop:
+      for (let k = 0; k < this.rows; k++) {
+        for (let m = 0; m < this.cols; m++) {
+          if (this.check(n[k][m])) {
+            this.leftmost = m
+            break loop
+          }
+        }
+      }
+      console.log(this.leftmost)
+    }
+    
     if(draw === "draw" && j < this.leftmost) {
       this.leftmost = j;
       // fill all the cells right of the leftmost non-empty cell to
