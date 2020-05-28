@@ -45,7 +45,7 @@ export default class App extends React.Component {
     }
 
     // don't update empty adjacent cells
-    if (newCell === false && n[i][j] === " ") {
+    if (newCell === false && !this.check(n[i][j])) {
       return;
     }
 
@@ -55,27 +55,27 @@ export default class App extends React.Component {
     let D = n[i][j-1];
     let ans = null;
     //━ ┃ ┏ ┓ ┗ ┛ ┣ ┫ ┳ ┻ ╋
-    if ((A !== " " || C !== " ") && B === " " && D === " ") {
+    if ((this.check(A) || this.check(C)) && !this.check(B) && !this.check(D)) {
       ans = '┃';
-    } else if (A === " " && C === " " && (B !== " " || D !== " ")) {
+    } else if (!this.check(A) && !this.check(C) && (this.check(B) || this.check(D))) {
       ans = '━';
-    } else if (A === " " && B !== " " && C !== " " && D === " ") {
+    } else if (!this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
       ans = '┏';
-    } else if (A === " " && B === " " && C !== " " && D !== " ") {
+    } else if (!this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
       ans = '┓';
-    } else if (A !== " " && B !== " " && C === " " && D === " ") {
+    } else if (this.check(A) && this.check(B) && !this.check(C) && !this.check(D)) {
       ans = '┗';
-    } else if (A !== " " && B === " " && C === " " && D !== " ") {
+    } else if (this.check(A) && !this.check(B) && !this.check(C) && this.check(D)) {
       ans = '┛';
-    } else if (A !== " " && B !== " " && C !== " " && D === " ") {
+    } else if (this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
       ans = '┣';
-    } else if (A !== " " && B === " " && C !== " " && D !== " ") {
+    } else if (this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
       ans = '┫';
-    } else if (A === " " && B !== " " && C !== " " && D !== " ") {
+    } else if (!this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
       ans = '┳';
-    } else if (A !== " " && B !== " " && C === " " && D !== " ") {
+    } else if (this.check(A) && this.check(B) && !this.check(C) && this.check(D)) {
       ans = '┻';
-    } else if (A !== " " && B !== " " && C !== " " && D !== " ") {
+    } else if (this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
       ans = '╋';
     } else {
       ans = '╸'
