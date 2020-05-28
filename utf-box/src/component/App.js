@@ -10,7 +10,7 @@ export default class App extends React.Component {
     this.cols = 50
     this.cells = Array(this.rows);
     for (let i = 0; i < this.rows; i++) {
-      this.cells[i] = Array(this.cols).fill(" ");
+      this.cells[i] = Array(this.cols).fill(null);
     }
 
     this.state = {
