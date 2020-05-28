@@ -23,6 +23,14 @@ export default class App extends React.Component {
     }
   }
 
+  check(c) {
+    if (c === null || c === " ") {
+      return false
+    } else {
+      return true
+    }
+  }
+
   // newCell = false when adjacent cells are being updated
   // draw = false when erasing
   updateCell(i, j, newCell, draw) {
