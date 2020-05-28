@@ -8,6 +8,7 @@ export default class App extends React.Component {
 
     this.rows = 25
     this.cols = 50
+    this.leftmost = this.cols - 1
     this.cells = Array(this.rows);
     for (let i = 0; i < this.rows; i++) {
       this.cells[i] = Array(this.cols).fill(null);
@@ -86,6 +87,19 @@ export default class App extends React.Component {
     }
 
     n[i][j] = ans;
+
+    if(draw === "draw" && j < this.leftmost) {
+      this.leftmost = j;
+
+      for (let k = 0; k < this.rows; k++) {
+        for (let m = this.leftmost; m < this.cols; m++) {
+          if (!this.check(n[k][m])) {
+            n[k][m] = " "
+          }
+        }
+      }
+    }
+
     this.setState({cells: n});
   }
 
