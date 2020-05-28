@@ -82,7 +82,7 @@ export default class App extends React.Component {
     }
 
     if(draw === "erase") {
-      ans = " "
+      ans = null
     }
 
     n[i][j] = ans;
@@ -108,7 +108,7 @@ export default class App extends React.Component {
     let n = newState.cells;
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
-        n[i][j] = " ";
+        n[i][j] = null;
         this.setState({cells: n})
       }
     }
