@@ -8,9 +8,11 @@ export default class App extends React.Component {
 
     this.rows = 25
     this.cols = 50
+    this.leftmost = this.cols - 1
+    this.prevLeftmost = this.leftmost.valueOf()
     this.cells = Array(this.rows);
     for (let i = 0; i < this.rows; i++) {
-      this.cells[i] = Array(this.cols).fill(" ");
+      this.cells[i] = Array(this.cols).fill(null);
     }
 
     this.state = {
@@ -20,6 +22,14 @@ export default class App extends React.Component {
       row: this.rows,
       col: this.cols,
       cells: this.cells
+    }
+  }
+
+  check(c) {
+    if (c === null || c === " ") {
+      return false
+    } else {
+      return true
     }
   }
 
@@ -37,7 +47,7 @@ export default class App extends React.Component {
     }
 
     // don't update empty adjacent cells
-    if (newCell === false && n[i][j] === " ") {
+    if (newCell === false && !this.check(n[i][j])) {
       return;
     }
 
@@ -47,37 +57,79 @@ export default class App extends React.Component {
     let D = n[i][j-1];
     let ans = null;
     //━ ┃ ┏ ┓ ┗ ┛ ┣ ┫ ┳ ┻ ╋
-    if ((A !== " " || C !== " ") && B === " " && D === " ") {
-      ans = '┃';
-    } else if (A === " " && C === " " && (B !== " " || D !== " ")) {
-      ans = '━';
-    } else if (A === " " && B !== " " && C !== " " && D === " ") {
-      ans = '┏';
-    } else if (A === " " && B === " " && C !== " " && D !== " ") {
-      ans = '┓';
-    } else if (A !== " " && B !== " " && C === " " && D === " ") {
-      ans = '┗';
-    } else if (A !== " " && B === " " && C === " " && D !== " ") {
-      ans = '┛';
-    } else if (A !== " " && B !== " " && C !== " " && D === " ") {
-      ans = '┣';
-    } else if (A !== " " && B === " " && C !== " " && D !== " ") {
-      ans = '┫';
-    } else if (A === " " && B !== " " && C !== " " && D !== " ") {
-      ans = '┳';
-    } else if (A !== " " && B !== " " && C === " " && D !== " ") {
-      ans = '┻';
-    } else if (A !== " " && B !== " " && C !== " " && D !== " ") {
-      ans = '╋';
-    } else {
-      ans = '╸'
-    }
-
-    if(draw === "erase") {
-      ans = " "
+    if (draw === "draw") {
+      if ((this.check(A) || this.check(C)) && !this.check(B) && !this.check(D)) {
+        ans = '┃';
+      } else if (!this.check(A) && !this.check(C) && (this.check(B) || this.check(D))) {
+        ans = '━';
+      } else if (!this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
+        ans = '┏';
+      } else if (!this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
+        ans = '┓';
+      } else if (this.check(A) && this.check(B) && !this.check(C) && !this.check(D)) {
+        ans = '┗';
+      } else if (this.check(A) && !this.check(B) && !this.check(C) && this.check(D)) {
+        ans = '┛';
+      } else if (this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
+        ans = '┣';
+      } else if (this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
+        ans = '┫';
+      } else if (!this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
+        ans = '┳';
+      } else if (this.check(A) && this.check(B) && !this.check(C) && this.check(D)) {
+        ans = '┻';
+      } else if (this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
+        ans = '╋';
+      } else {
+        ans = '╸'
+      }
+    } else if (draw === "erase") {
+      if (j < this.leftmost) {
+        ans = null
+      } else {
+        ans = " "
+      }
+      
     }
 
     n[i][j] = ans;
+
+    if(draw === "erase" && newCell) {
+      loop:
+      for (let m = 0; m < this.cols; m++) {
+        for (let k = 0; k < this.rows; k++) {
+          if (this.check(n[k][m]) || (m === this.cols - 1 && k === this.rows - 1)) {
+            this.prevLeftmost = this.leftmost.valueOf()
+            this.leftmost =  m
+            break loop
+          }
+        }
+      }
+    }
+
+    if(draw === "draw" && j < this.leftmost) {
+      this.leftmost = j;
+      // fill all the cells right of the leftmost non-empty cell to
+      // improve selecting it for copy pasting
+      for (let k = 0; k < this.rows; k++) {
+        for (let m = this.leftmost; m < this.cols; m++) {
+          if (!this.check(n[k][m])) {
+            n[k][m] = " "
+          }
+        }
+      }
+    }
+
+    // set all cells left of leftmost to null
+    if(this.prevLeftmost < this.leftmost) {
+      console.log('yes')
+      for (let k = 0; k < this.rows; k++) {
+        for (let m = 0; m < this.leftmost; m++) {
+            n[k][m] = null
+        }
+      }
+    }
+
     this.setState({cells: n});
   }
 
@@ -100,7 +152,7 @@ export default class App extends React.Component {
     let n = newState.cells;
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
-        n[i][j] = " ";
+        n[i][j] = null;
         this.setState({cells: n})
       }
     }
