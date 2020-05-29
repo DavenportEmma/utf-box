@@ -83,17 +83,17 @@ export default class App extends React.Component {
         ans = '╸'
       }
     } else if (draw === "erase") {
-      ans = null
+      ans = " "
     }
 
     n[i][j] = ans;
 
-    if(draw === "erase") {
+    if(draw === "erase" && newCell) {
       loop:
-      for (let k = 0; k < this.rows; k++) {
-        for (let m = 0; m < this.cols; m++) {
+      for (let m = 0; m < this.cols; m++) {
+        for (let k = 0; k < this.rows; k++) {
           if (this.check(n[k][m])) {
-            this.leftmost = m
+            this.leftmost =  m
             break loop
           }
         }
@@ -112,7 +112,7 @@ export default class App extends React.Component {
         }
       }
     }
-
+    console.log(this.leftmost)
     this.setState({cells: n});
   }
 
