@@ -56,33 +56,33 @@ export default class App extends React.Component {
     let D = n[i][j-1];
     let ans = null;
     //━ ┃ ┏ ┓ ┗ ┛ ┣ ┫ ┳ ┻ ╋
-    if ((this.check(A) || this.check(C)) && !this.check(B) && !this.check(D)) {
-      ans = '┃';
-    } else if (!this.check(A) && !this.check(C) && (this.check(B) || this.check(D))) {
-      ans = '━';
-    } else if (!this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
-      ans = '┏';
-    } else if (!this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
-      ans = '┓';
-    } else if (this.check(A) && this.check(B) && !this.check(C) && !this.check(D)) {
-      ans = '┗';
-    } else if (this.check(A) && !this.check(B) && !this.check(C) && this.check(D)) {
-      ans = '┛';
-    } else if (this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
-      ans = '┣';
-    } else if (this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
-      ans = '┫';
-    } else if (!this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
-      ans = '┳';
-    } else if (this.check(A) && this.check(B) && !this.check(C) && this.check(D)) {
-      ans = '┻';
-    } else if (this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
-      ans = '╋';
-    } else {
-      ans = '╸'
-    }
-
-    if(draw === "erase") {
+    if (draw === "draw") {
+      if ((this.check(A) || this.check(C)) && !this.check(B) && !this.check(D)) {
+        ans = '┃';
+      } else if (!this.check(A) && !this.check(C) && (this.check(B) || this.check(D))) {
+        ans = '━';
+      } else if (!this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
+        ans = '┏';
+      } else if (!this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
+        ans = '┓';
+      } else if (this.check(A) && this.check(B) && !this.check(C) && !this.check(D)) {
+        ans = '┗';
+      } else if (this.check(A) && !this.check(B) && !this.check(C) && this.check(D)) {
+        ans = '┛';
+      } else if (this.check(A) && this.check(B) && this.check(C) && !this.check(D)) {
+        ans = '┣';
+      } else if (this.check(A) && !this.check(B) && this.check(C) && this.check(D)) {
+        ans = '┫';
+      } else if (!this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
+        ans = '┳';
+      } else if (this.check(A) && this.check(B) && !this.check(C) && this.check(D)) {
+        ans = '┻';
+      } else if (this.check(A) && this.check(B) && this.check(C) && this.check(D)) {
+        ans = '╋';
+      } else {
+        ans = '╸'
+      }
+    } else if (draw === "erase") {
       ans = null
     }
 
@@ -98,9 +98,8 @@ export default class App extends React.Component {
           }
         }
       }
-      console.log(this.leftmost)
     }
-    
+
     if(draw === "draw" && j < this.leftmost) {
       this.leftmost = j;
       // fill all the cells right of the leftmost non-empty cell to
