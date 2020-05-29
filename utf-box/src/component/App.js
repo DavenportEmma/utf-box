@@ -18,7 +18,7 @@ export default class App extends React.Component {
     this.state = {
       mouseDown: false,
       select: "none",
-      draw: "draw",
+      tool: "draw",
       row: this.rows,
       col: this.cols,
       cells: this.cells
@@ -34,9 +34,8 @@ export default class App extends React.Component {
   }
 
   // newCell = false when adjacent cells are being updated
-  // draw = false when erasing
-  updateCell(i, j, newCell, draw) {
-    if (draw === "select") {
+  updateCell(i, j, newCell, tool) {
+    if (tool === "select") {
       return;
     }
     let newState = Object.assign({}, this.state);
@@ -57,7 +56,7 @@ export default class App extends React.Component {
     let D = n[i][j-1];
     let ans = null;
     //━ ┃ ┏ ┓ ┗ ┛ ┣ ┫ ┳ ┻ ╋
-    if (draw === "draw") {
+    if (tool === "draw") {
       if ((this.check(A) || this.check(C)) && !this.check(B) && !this.check(D)) {
         ans = '┃';
       } else if (!this.check(A) && !this.check(C) && (this.check(B) || this.check(D))) {
@@ -83,7 +82,7 @@ export default class App extends React.Component {
       } else {
         ans = '╸'
       }
-    } else if (draw === "erase") {
+    } else if (tool === "erase") {
       if (j < this.leftmost) {
         ans = null
       } else {
@@ -94,7 +93,7 @@ export default class App extends React.Component {
 
     n[i][j] = ans;
 
-    if(draw === "erase" && newCell) {
+    if(tool === "erase" && newCell) {
       loop:
       for (let m = 0; m < this.cols; m++) {
         for (let k = 0; k < this.rows; k++) {
@@ -107,7 +106,7 @@ export default class App extends React.Component {
       }
     }
 
-    if(draw === "draw" && j < this.leftmost) {
+    if(tool === "draw" && j < this.leftmost) {
       this.leftmost = j;
       // fill all the cells right of the leftmost non-empty cell to
       // improve selecting it for copy pasting
@@ -122,7 +121,6 @@ export default class App extends React.Component {
 
     // set all cells left of leftmost to null
     if(this.prevLeftmost < this.leftmost) {
-      console.log('yes')
       for (let k = 0; k < this.rows; k++) {
         for (let m = 0; m < this.leftmost; m++) {
             n[k][m] = null
@@ -134,7 +132,7 @@ export default class App extends React.Component {
   }
 
   handleClick(i, j) {
-    this.updateCell(i, j, true, this.state.draw);
+    this.updateCell(i, j, true, this.state.tool);
     this.updateCell(i-1, j, false, "draw");
     this.updateCell(i+1, j, false, "draw");
     this.updateCell(i, j-1, false, "draw");
@@ -172,10 +170,11 @@ export default class App extends React.Component {
           onClick={(i, j) => this.handleClick(i, j)}
           onMouseEnter={(i, j) => this.handleMouseEnter(i, j)}
         />
-        <button onClick={() => {this.setState({draw: "draw", select: "none"})}}>Draw</button>
-        <button onClick={() => {this.setState({draw: "erase", select: "none"})}}>Erase</button>
-        <button onClick={() => {this.setState({draw: "select", select: "auto"})}}>Select</button>
+        <button onClick={() => {this.setState({tool: "draw", select: "none"})}}>Draw</button>
+        <button onClick={() => {this.setState({tool: "erase", select: "none"})}}>Erase</button>
+        <button onClick={() => {this.setState({tool: "select", select: "auto"})}}>Select</button>
         <button onClick={() => {this.reset()}}>Reset</button>
+        <button onClick={() => {this.setState({tool: "text", select: "none"})}}>Text</button>
       </div>
     )
   }
