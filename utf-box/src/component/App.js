@@ -84,7 +84,12 @@ export default class App extends React.Component {
         ans = '╸'
       }
     } else if (draw === "erase") {
-      ans = " "
+      if (j < this.leftmost) {
+        ans = null
+      } else {
+        ans = " "
+      }
+      
     }
 
     n[i][j] = ans;
