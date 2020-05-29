@@ -92,7 +92,7 @@ export default class App extends React.Component {
       loop:
       for (let m = 0; m < this.cols; m++) {
         for (let k = 0; k < this.rows; k++) {
-          if (this.check(n[k][m])) {
+          if (this.check(n[k][m]) || (m === this.cols - 1 && k === this.rows - 1)) {
             this.leftmost =  m
             break loop
           }
@@ -112,7 +112,6 @@ export default class App extends React.Component {
         }
       }
     }
-    console.log(this.leftmost)
     this.setState({cells: n});
   }
 
