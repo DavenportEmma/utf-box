@@ -9,6 +9,7 @@ export default class App extends React.Component {
     this.rows = 25
     this.cols = 50
     this.leftmost = this.cols - 1
+    this.prevLeftmost = this.leftmost.valueOf()
     this.cells = Array(this.rows);
     for (let i = 0; i < this.rows; i++) {
       this.cells[i] = Array(this.cols).fill(null);
@@ -93,6 +94,7 @@ export default class App extends React.Component {
       for (let m = 0; m < this.cols; m++) {
         for (let k = 0; k < this.rows; k++) {
           if (this.check(n[k][m]) || (m === this.cols - 1 && k === this.rows - 1)) {
+            this.prevLeftmost = this.leftmost.valueOf()
             this.leftmost =  m
             break loop
           }
@@ -112,6 +114,17 @@ export default class App extends React.Component {
         }
       }
     }
+
+    // set all cells left of leftmost to null
+    if(this.prevLeftmost < this.leftmost) {
+      console.log('yes')
+      for (let k = 0; k < this.rows; k++) {
+        for (let m = 0; m < this.leftmost; m++) {
+            n[k][m] = null
+        }
+      }
+    }
+
     this.setState({cells: n});
   }
 
