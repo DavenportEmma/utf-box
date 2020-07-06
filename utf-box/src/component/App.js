@@ -6,10 +6,11 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.rows = 25
+    this.rows = 25  // number of rows and columns in table
     this.cols = 50
-    this.leftmost = this.cols - 1
-    this.prevLeftmost = this.leftmost.valueOf()
+    this.leftmost = this.cols - 1 // keeps track of the leftmost filled square
+    this.prevLeftmost = this.leftmost.valueOf() // used to see if leftmost has changed
+    // create 2d array of null cells
     this.cells = Array(this.rows);
     for (let i = 0; i < this.rows; i++) {
       this.cells[i] = Array(this.cols).fill(null);
@@ -35,6 +36,7 @@ export default class App extends React.Component {
 
   // newCell = false when adjacent cells are being updated
   updateCell(i, j, newCell, tool) {
+    // do nothing if select tool is selected
     if (tool === "select") {
       return;
     }
@@ -49,13 +51,14 @@ export default class App extends React.Component {
     if (newCell === false && !this.check(n[i][j])) {
       return;
     }
-
+    // get adjacent cells
     let A = n[i-1][j];
     let B = n[i][j+1];
     let C = n[i+1][j];
     let D = n[i][j-1];
     let ans = null;
     //━ ┃ ┏ ┓ ┗ ┛ ┣ ┫ ┳ ┻ ╋
+    // fill cell with line character based on the adjacent cells
     if (tool === "draw") {
       if ((this.check(A) || this.check(C)) && !this.check(B) && !this.check(D)) {
         ans = '┃';
@@ -93,6 +96,7 @@ export default class App extends React.Component {
 
     n[i][j] = ans;
 
+    // check for leftmost cell updates
     if(tool === "erase" && newCell) {
       loop:
       for (let m = 0; m < this.cols; m++) {
