@@ -9,4 +9,6 @@ copy it into your clipboard.
 It's pretty janky and doesn't work on mobile yet.
 
 ### todo
-When the entire board has been erased, call reset
+- When the entire board has been erased, call reset
+- Allow you to type stuff into the box
+- Have different types of line characters; light, heavy, double lined, curved ┑ ╗ ╮ ┐
