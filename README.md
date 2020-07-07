@@ -12,3 +12,4 @@ It's pretty janky and doesn't work on mobile yet.
 - When the entire board has been erased, call reset
 - Allow you to type stuff into the box
 - Have different types of line characters; light, heavy, double lined, curved ┑ ╗ ╮ ┐
+- Get cool icons
