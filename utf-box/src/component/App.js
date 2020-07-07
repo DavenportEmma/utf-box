@@ -186,7 +186,6 @@ export default class App extends React.Component {
         <button onClick={() => {this.setState({tool: "select", select: "auto"})}}>Select</button>
         <button onClick={() => {this.reset()}}>Reset</button>
         <button onClick={() => {this.setState({tool: "text", select: "none"})}}>Text</button>
-        <div className="text-test">{this.state.key}</div>
       </div>
     )
   }
