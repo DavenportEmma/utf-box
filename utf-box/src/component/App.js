@@ -22,7 +22,8 @@ export default class App extends React.Component {
       tool: "draw",
       row: this.rows,
       col: this.cols,
-      cells: this.cells
+      cells: this.cells,
+      key: " "
     }
   }
 
@@ -91,6 +92,7 @@ export default class App extends React.Component {
       } else {
         ans = " "
       }
+    } else if (tool === "text") {
       
     }
 
@@ -149,6 +151,10 @@ export default class App extends React.Component {
     }
   }
 
+  handleKey() {
+    this.setState({key: "h"})
+  }
+
   reset() {
     let newState = Object.assign({}, this.state);
     let n = newState.cells;
@@ -166,6 +172,7 @@ export default class App extends React.Component {
            style={{userSelect: this.state.select}}
            onMouseUp={() => {this.setState({mouseDown: false})}}
            onMouseDown={() => {this.setState({mouseDown: true})}}
+           onKeyPress={() => this.handleKey()}
       >
         <Table 
           colNum={this.state.col} 
@@ -179,6 +186,7 @@ export default class App extends React.Component {
         <button onClick={() => {this.setState({tool: "select", select: "auto"})}}>Select</button>
         <button onClick={() => {this.reset()}}>Reset</button>
         <button onClick={() => {this.setState({tool: "text", select: "none"})}}>Text</button>
+        <div className="text-test">{this.state.key}</div>
       </div>
     )
   }
