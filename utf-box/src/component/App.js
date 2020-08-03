@@ -151,8 +151,8 @@ export default class App extends React.Component {
     }
   }
 
-  handleKey() {
-    this.setState({key: "h"})
+  handleKey(e) {
+    this.setState({key: String.fromCharCode(e.keyCode)})
   }
 
   reset() {
@@ -172,7 +172,7 @@ export default class App extends React.Component {
            style={{userSelect: this.state.select}}
            onMouseUp={() => {this.setState({mouseDown: false})}}
            onMouseDown={() => {this.setState({mouseDown: true})}}
-           onKeyPress={() => this.handleKey()}
+           onKeyDown={(e) => this.handleKey(e)}
       >
         <Table 
           colNum={this.state.col} 
@@ -186,6 +186,8 @@ export default class App extends React.Component {
         <button onClick={() => {this.setState({tool: "select", select: "auto"})}}>Select</button>
         <button onClick={() => {this.reset()}}>Reset</button>
         <button onClick={() => {this.setState({tool: "text", select: "none"})}}>Text</button>
+        
+        <div style={{color:'white'}}>{this.state.key}</div>
       </div>
     )
   }
