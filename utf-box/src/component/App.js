@@ -151,10 +151,6 @@ export default class App extends React.Component {
     }
   }
 
-  handleKey(e) {
-    this.setState({key: String.fromCharCode(e.keyCode)})
-  }
-
   reset() {
     let newState = Object.assign({}, this.state);
     let n = newState.cells;
@@ -169,12 +165,14 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="component-App"
+           tabIndex='0'
            style={{userSelect: this.state.select}}
            onMouseUp={() => {this.setState({mouseDown: false})}}
            onMouseDown={() => {this.setState({mouseDown: true})}}
-           onKeyDown={(e) => this.handleKey(e)}
+           onKeyDown={(e) => {this.setState({key: String.fromCharCode(e.keyCode)})}}
       >
         <Table 
+          tabIndex='0'
           colNum={this.state.col} 
           rowNum={this.state.row}
           cells={this.state.cells}
