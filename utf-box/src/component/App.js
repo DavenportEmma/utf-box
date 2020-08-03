@@ -29,7 +29,7 @@ export default class App extends React.Component {
   }
 
   check(c) {
-    if (c === null || c === " " || c.charCodeAt(0) < 128) {
+    if (c === null || (c.charCodeAt(0) < 128 && c.charCodeAt(0) > 31)) {
       return false
     } else {
       return true
