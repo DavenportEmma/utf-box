@@ -179,7 +179,7 @@ export default class App extends React.Component {
            onMouseDown={() => {this.setState({mouseDown: true})}}
            onKeyDown={(e) => {this.setState({key: String.fromCharCode(e.keyCode)})}}
       >
-        <div className="version-info">v {pkg.version}</div>
+        <div className="version-info">v{pkg.version}</div>
         <Table 
           tabIndex='0'
           colNum={this.state.col} 
