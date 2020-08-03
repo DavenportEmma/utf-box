@@ -28,7 +28,7 @@ export default class App extends React.Component {
   }
 
   check(c) {
-    if (c === null || c === " ") {
+    if (c === null || c === " " || c.charCodeAt(0) < 128) {
       return false
     } else {
       return true
@@ -93,7 +93,7 @@ export default class App extends React.Component {
         ans = " "
       }
     } else if (tool === "text") {
-      
+      ans = this.state.key
     }
 
     n[i][j] = ans;
