@@ -35,6 +35,13 @@ export default class App extends React.Component {
     }
   }
 
+  checkForLimits(c) {
+    if (c === null || c === " ") {
+      return false
+    } else {
+      return true
+    }
+  }
   // newCell = false when adjacent cells are being updated
   updateCell(i, j, newCell, tool) {
     // do nothing if select tool is selected
@@ -103,7 +110,7 @@ export default class App extends React.Component {
       loop:
       for (let m = 0; m < this.cols; m++) {
         for (let k = 0; k < this.rows; k++) {
-          if (this.check(n[k][m]) || (m === this.cols - 1 && k === this.rows - 1)) {
+          if (this.checkForLimits(n[k][m]) || (m === this.cols - 1 && k === this.rows - 1)) {
             this.prevLeftmost = this.leftmost.valueOf()
             this.leftmost =  m
             break loop
@@ -118,7 +125,7 @@ export default class App extends React.Component {
       // improve selecting it for copy pasting
       for (let k = 0; k < this.rows; k++) {
         for (let m = this.leftmost; m < this.cols; m++) {
-          if (!this.check(n[k][m])) {
+          if (!this.checkForLimits(n[k][m])) {
             n[k][m] = " "
           }
         }
