@@ -1,6 +1,7 @@
 import React from 'react';
 import Table from "./Table";
 import './App.css';
+import pkg from '../../package.json'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -178,7 +179,7 @@ export default class App extends React.Component {
            onMouseDown={() => {this.setState({mouseDown: true})}}
            onKeyDown={(e) => {this.setState({key: String.fromCharCode(e.keyCode)})}}
       >
-        <div className="version-info"></div>
+        <div className="version-info">v {pkg.version}</div>
         <Table 
           tabIndex='0'
           colNum={this.state.col} 
