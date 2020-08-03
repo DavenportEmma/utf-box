@@ -22,18 +22,26 @@ export default class App extends React.Component {
       tool: "draw",
       row: this.rows,
       col: this.cols,
-      cells: this.cells
+      cells: this.cells,
+      key: " "
     }
   }
 
   check(c) {
-    if (c === null || c === " ") {
+    if (c === null || c === " " || c.charCodeAt(0) < 128) {
       return false
     } else {
       return true
     }
   }
 
+  checkForLimits(c) {
+    if (c === null || c === " ") {
+      return false
+    } else {
+      return true
+    }
+  }
   // newCell = false when adjacent cells are being updated
   updateCell(i, j, newCell, tool) {
     // do nothing if select tool is selected
@@ -91,7 +99,8 @@ export default class App extends React.Component {
       } else {
         ans = " "
       }
-      
+    } else if (tool === "text") {
+      ans = this.state.key
     }
 
     n[i][j] = ans;
@@ -101,7 +110,7 @@ export default class App extends React.Component {
       loop:
       for (let m = 0; m < this.cols; m++) {
         for (let k = 0; k < this.rows; k++) {
-          if (this.check(n[k][m]) || (m === this.cols - 1 && k === this.rows - 1)) {
+          if (this.checkForLimits(n[k][m]) || (m === this.cols - 1 && k === this.rows - 1)) {
             this.prevLeftmost = this.leftmost.valueOf()
             this.leftmost =  m
             break loop
@@ -116,7 +125,7 @@ export default class App extends React.Component {
       // improve selecting it for copy pasting
       for (let k = 0; k < this.rows; k++) {
         for (let m = this.leftmost; m < this.cols; m++) {
-          if (!this.check(n[k][m])) {
+          if (!this.checkForLimits(n[k][m])) {
             n[k][m] = " "
           }
         }
@@ -163,11 +172,14 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="component-App"
+           tabIndex='0'
            style={{userSelect: this.state.select}}
            onMouseUp={() => {this.setState({mouseDown: false})}}
            onMouseDown={() => {this.setState({mouseDown: true})}}
+           onKeyDown={(e) => {this.setState({key: String.fromCharCode(e.keyCode)})}}
       >
         <Table 
+          tabIndex='0'
           colNum={this.state.col} 
           rowNum={this.state.row}
           cells={this.state.cells}
@@ -179,6 +191,8 @@ export default class App extends React.Component {
         <button onClick={() => {this.setState({tool: "select", select: "auto"})}}>Select</button>
         <button onClick={() => {this.reset()}}>Reset</button>
         <button onClick={() => {this.setState({tool: "text", select: "none"})}}>Text</button>
+        
+        <div style={{color:'white'}}>{this.state.key}</div>
       </div>
     )
   }
