@@ -146,12 +146,13 @@ export default class App extends React.Component {
     if (this.state.tool === "select") {
       return;
     }
-
-    this.updateCell(i, j, true, this.state.tool);
-    this.updateCell(i-1, j, false, "draw");
-    this.updateCell(i+1, j, false, "draw");
-    this.updateCell(i, j-1, false, "draw");
-    this.updateCell(i, j+1, false, "draw");
+    else if (this.state.tool === "draw" || this.state.tool === "erase") {
+      this.updateCell(i, j, true, this.state.tool);
+      this.updateCell(i-1, j, false, "draw");
+      this.updateCell(i+1, j, false, "draw");
+      this.updateCell(i, j-1, false, "draw");
+      this.updateCell(i, j+1, false, "draw");
+    }
   }
 
   handleMouseEnter(i, j) {
