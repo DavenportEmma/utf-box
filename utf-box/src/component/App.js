@@ -45,10 +45,6 @@ export default class App extends React.Component {
   }
   // newCell = false when adjacent cells are being updated
   updateCell(i, j, newCell, tool) {
-    // do nothing if select tool is selected
-    if (tool === "select") {
-      return;
-    }
     let newState = Object.assign({}, this.state);
     let n = newState.cells;
     // don't update oob cells
@@ -146,6 +142,11 @@ export default class App extends React.Component {
   }
 
   handleClick(i, j) {
+    // do nothing if select tool is selected
+    if (this.state.tool === "select") {
+      return;
+    }
+
     this.updateCell(i, j, true, this.state.tool);
     this.updateCell(i-1, j, false, "draw");
     this.updateCell(i+1, j, false, "draw");
