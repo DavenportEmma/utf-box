@@ -17,7 +17,7 @@ export default class App extends React.Component {
       this.cells[i] = Array(this.cols).fill(null);
     }
 
-    this.textCell = [0,0]
+    this.textCell = null
 
     this.state = {
       mouseDown: false,
@@ -148,6 +148,7 @@ export default class App extends React.Component {
     let n = newState.cells;
     n[this.textCell[0]][this.textCell[1]] = char;
     this.setState({cells: n});
+    this.textCell[1]++
   }
 
   handleClick(i, j) {
