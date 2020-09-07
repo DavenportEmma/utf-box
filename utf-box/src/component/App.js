@@ -96,8 +96,6 @@ export default class App extends React.Component {
       } else {
         ans = " "
       }
-    } else if (tool === "text") {
-      ans = this.state.key
     }
 
     n[i][j] = ans;
@@ -141,17 +139,22 @@ export default class App extends React.Component {
     this.setState({cells: n});
   }
 
+  handleKeyPress(e) {
+    this.setState({key: String.fromCharCode(e.keyCode)})
+  }
+
   handleClick(i, j) {
     // do nothing if select tool is selected
     if (this.state.tool === "select") {
       return;
-    }
-    else if (this.state.tool === "draw" || this.state.tool === "erase") {
+    } else if (this.state.tool === "draw" || this.state.tool === "erase") {
       this.updateCell(i, j, true, this.state.tool);
       this.updateCell(i-1, j, false, "draw");
       this.updateCell(i+1, j, false, "draw");
       this.updateCell(i, j-1, false, "draw");
       this.updateCell(i, j+1, false, "draw");
+    } else if (this.state.tool === "text") {
+      
     }
   }
 
@@ -179,7 +182,7 @@ export default class App extends React.Component {
            style={{userSelect: this.state.select}}
            onMouseUp={() => {this.setState({mouseDown: false})}}
            onMouseDown={() => {this.setState({mouseDown: true})}}
-           onKeyDown={(e) => {this.setState({key: String.fromCharCode(e.keyCode)})}}
+           onKeyDown={(e) => this.handleKeyPress(e)}
       >
         <div className="version-info">v{pkg.version}</div>
         <Table 
