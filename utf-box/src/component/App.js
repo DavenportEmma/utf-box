@@ -17,7 +17,7 @@ export default class App extends React.Component {
       this.cells[i] = Array(this.cols).fill(null);
     }
 
-    this.textCoords = [null,null]
+    this.textCell = [0,0]
 
     this.state = {
       mouseDown: false,
@@ -146,7 +146,7 @@ export default class App extends React.Component {
     //this.setState({key: String.fromCharCode(e.keyCode)})
     let newState = Object.assign({}, this.state);
     let n = newState.cells;
-    n[0,0] = char;
+    n[this.textCell[0]][this.textCell[1]] = char;
     this.setState({cells: n});
   }
 
@@ -161,7 +161,7 @@ export default class App extends React.Component {
       this.updateCell(i, j-1, false, "draw");
       this.updateCell(i, j+1, false, "draw");
     } else if (this.state.tool === "text") {
-      
+      this.textCell = [i, j];
     }
   }
 
