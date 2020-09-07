@@ -142,13 +142,21 @@ export default class App extends React.Component {
   }
 
   handleKeyPress(e) {
-    let char = String.fromCharCode(e.keyCode);
-    //this.setState({key: String.fromCharCode(e.keyCode)})
-    let newState = Object.assign({}, this.state);
-    let n = newState.cells;
-    n[this.textCell[0]][this.textCell[1]] = char;
-    this.setState({cells: n});
-    this.textCell[1]++
+    if (this.textCell !== null) {
+      let char = String.fromCharCode(e.keyCode);
+      console.log(e.keyCode)
+      //this.setState({key: String.fromCharCode(e.keyCode)})
+      let newState = Object.assign({}, this.state);
+      let n = newState.cells;
+      if (e.keyCode === 8) {
+        this.textCell[1]--
+        n[this.textCell[0]][this.textCell[1]] = " ";
+      } else {
+        n[this.textCell[0]][this.textCell[1]] = char;
+        this.textCell[1]++
+      }
+      this.setState({cells: n});
+    }
   }
 
   handleClick(i, j) {
