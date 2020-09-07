@@ -17,6 +17,8 @@ export default class App extends React.Component {
       this.cells[i] = Array(this.cols).fill(null);
     }
 
+    this.textCoords = [null,null]
+
     this.state = {
       mouseDown: false,
       select: "none",
