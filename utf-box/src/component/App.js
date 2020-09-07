@@ -140,7 +140,12 @@ export default class App extends React.Component {
   }
 
   handleKeyPress(e) {
-    this.setState({key: String.fromCharCode(e.keyCode)})
+    let char = String.fromCharCode(e.keyCode);
+    //this.setState({key: String.fromCharCode(e.keyCode)})
+    let newState = Object.assign({}, this.state);
+    let n = newState.cells;
+    n[0,0] = char;
+    this.setState({cells: n});
   }
 
   handleClick(i, j) {
