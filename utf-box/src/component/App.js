@@ -17,6 +17,8 @@ export default class App extends React.Component {
       this.cells[i] = Array(this.cols).fill(null);
     }
 
+    this.textCell = null
+
     this.state = {
       mouseDown: false,
       select: "none",
@@ -45,10 +47,6 @@ export default class App extends React.Component {
   }
   // newCell = false when adjacent cells are being updated
   updateCell(i, j, newCell, tool) {
-    // do nothing if select tool is selected
-    if (tool === "select") {
-      return;
-    }
     let newState = Object.assign({}, this.state);
     let n = newState.cells;
     // don't update oob cells
@@ -100,8 +98,6 @@ export default class App extends React.Component {
       } else {
         ans = " "
       }
-    } else if (tool === "text") {
-      ans = this.state.key
     }
 
     n[i][j] = ans;
@@ -145,12 +141,35 @@ export default class App extends React.Component {
     this.setState({cells: n});
   }
 
+  handleKeyPress(e) {
+    if (this.textCell !== null) {
+      let char = String.fromCharCode(e.keyCode);
+      let newState = Object.assign({}, this.state);
+      let n = newState.cells;
+      if (e.keyCode === 8) {  // backspace
+        this.textCell[1]--
+        n[this.textCell[0]][this.textCell[1]] = " ";
+      } else {
+        n[this.textCell[0]][this.textCell[1]] = char;
+        this.textCell[1]++
+      }
+      this.setState({cells: n});
+    }
+  }
+
   handleClick(i, j) {
-    this.updateCell(i, j, true, this.state.tool);
-    this.updateCell(i-1, j, false, "draw");
-    this.updateCell(i+1, j, false, "draw");
-    this.updateCell(i, j-1, false, "draw");
-    this.updateCell(i, j+1, false, "draw");
+    // do nothing if select tool is selected
+    if (this.state.tool === "select") {
+      return;
+    } else if (this.state.tool === "draw" || this.state.tool === "erase") {
+      this.updateCell(i, j, true, this.state.tool);
+      this.updateCell(i-1, j, false, "draw");
+      this.updateCell(i+1, j, false, "draw");
+      this.updateCell(i, j-1, false, "draw");
+      this.updateCell(i, j+1, false, "draw");
+    } else if (this.state.tool === "text") {
+      this.textCell = [i, j];
+    }
   }
 
   handleMouseEnter(i, j) {
@@ -177,7 +196,7 @@ export default class App extends React.Component {
            style={{userSelect: this.state.select}}
            onMouseUp={() => {this.setState({mouseDown: false})}}
            onMouseDown={() => {this.setState({mouseDown: true})}}
-           onKeyDown={(e) => {this.setState({key: String.fromCharCode(e.keyCode)})}}
+           onKeyDown={(e) => this.handleKeyPress(e)}
       >
         <div className="version-info">v{pkg.version}</div>
         <Table 
