@@ -144,11 +144,9 @@ export default class App extends React.Component {
   handleKeyPress(e) {
     if (this.textCell !== null) {
       let char = String.fromCharCode(e.keyCode);
-      console.log(e.keyCode)
-      //this.setState({key: String.fromCharCode(e.keyCode)})
       let newState = Object.assign({}, this.state);
       let n = newState.cells;
-      if (e.keyCode === 8) {
+      if (e.keyCode === 8) {  // backspace
         this.textCell[1]--
         n[this.textCell[0]][this.textCell[1]] = " ";
       } else {
